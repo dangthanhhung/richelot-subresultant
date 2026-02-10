@@ -1,6 +1,6 @@
 # richelot-subresultant
 
-Python and SageMath code accompanying the paper:
+Supplementary code for the paper:
 
 > **Derivative-Free Richelot Isogenies via Subresultants with Algebraic Certification**
 > Hung T. Dang, Diep V. Nguyen
@@ -8,49 +8,49 @@ Python and SageMath code accompanying the paper:
 
 ## Contents
 
-- `benchmark.py` — Benchmark runner for WRO, RPR, and GSR routes ($10^6$ matched trials per prime).
-- `verify.py` — Correctness verification: coefficient-wise RPR vs WRO comparison and double-Richelot involution test.
-- `cross_validate.sage` — Independent SageMath cross-validation script.
+| File | Description |
+|------|-------------|
+| `benchmark.py` | Benchmark runner: kernel-only, GSR-strict, GSR-full, GSR-light, and multi-prime scaling configurations (§5.2–5.6) |
+| `verify.py` | Correctness verification: coefficient-wise RPR vs WRO comparison and double-Richelot involution test (§5.1) |
+| `cross_validate.sage` | Independent SageMath cross-validation of the Richelot step |
 
 ## Requirements
 
-- Python ≥ 3.10
+- Python ≥ 3.13
 - SageMath ≥ 9.5 (for `cross_validate.sage` only)
 
-No external Python packages are required; all arithmetic uses built-in integers and the `random` module.
+No external Python packages are required.
 
 ## Usage
 
 ```bash
-# Run benchmarks (default: p = 65537, 10^6+3, 2^255-19)
+# Benchmarks: WRO, RPR, GSR over three primes
+# (p = 65537, 10^6+3, 2^255-19; 10^6 matched trials each)
 python benchmark.py
 
-# Run correctness tests (five primes, 2.5 × 10^5 triples)
+# Correctness tests: 2.5 × 10^5 random triples across five primes
+# (p = 101, 65537, 10^6+3, 2^31-1, 2^61-1)
 python verify.py
 
 # SageMath cross-validation
 sage cross_validate.sage
 ```
 
-## Overview
+## Routes
 
-The code implements three routes for a single Richelot (2,2)-isogeny step on monic quadratic triples over F_p (p > 2):
+The code implements three routes for a single Richelot (2,2)-isogeny step on monic quadratic triples over F_p, p > 2:
 
 | Route | Description |
 |-------|-------------|
-| **WRO** | Classical Wronskian: $U = v'w - vw'$ via explicit derivatives |
-| **RPR** | Remainder-Polynomial Route: derivative-free, uses pseudo-remainder + minor syzygy |
-| **GSR** | Guarded Subresultant Route: RPR core with algebraic guards and post-check |
-
-See the paper for full details on the algebraic equivalence (Theorem 3.8) and the certified evaluator (Algorithm 1).
+| **WRO** | Classical Wronskian: U = v'w − vw' via explicit derivatives |
+| **RPR** | Remainder-Polynomial Route: derivative-free via pseudo-remainder and minor syzygy |
+| **GSR** | Guarded Subresultant Route: RPR core with algebraic guards (G1–G7) and post-check (P1–P3) |
 
 ## License
 
 MIT. See [LICENSE](LICENSE).
 
 ## Citation
-
-If you use this code, please cite:
 
 ```bibtex
 @article{DangNguyen2026,
